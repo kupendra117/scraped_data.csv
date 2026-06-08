@@ -1,0 +1,28 @@
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+# Example website (you can change later)
+url = "https://example.com"
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, "html.parser")
+
+# Extract all headings (example data)
+headings = soup.find_all("h2")
+
+data = []
+
+for h in headings:
+    text = h.text.strip()
+    data.append(text)
+
+# Save to CSV
+with open("scraped_data.csv", "w", newline="", encoding="utf-8") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Headings"])
+
+    for item in data:
+        writer.writerow([item])
+
+print("Data scraped and saved successfully!")
